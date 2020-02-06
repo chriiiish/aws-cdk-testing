@@ -15,3 +15,5 @@ You'll need to install the following things to get started:
 ![Architecture Diagram](https://github.com/chriiiish/aws-cdk-testing/raw/master/docs/cdk-architecture.png "Architecture Diagram")
 
 ## Getting Started
+
+Instructions for getting started are in the `src/` folder

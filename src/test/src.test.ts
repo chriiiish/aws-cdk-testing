@@ -1,13 +1,24 @@
 import { expect as expectCDK, matchTemplate, MatchStyle } from '@aws-cdk/assert';
-import * as cdk from '@aws-cdk/core';
-import Src = require('../lib/src-stack');
+import '@aws-cdk/assert/jest';
+import core = require('@aws-cdk/core');
+import Src = require('../lib/base-stack');
 
-test('Empty Stack', () => {
-    const app = new cdk.App();
+test('Contains one S3 Bucket', () => {
+    const app = new core.App();
     // WHEN
-    const stack = new Src.SrcStack(app, 'MyTestStack');
+    const stack = new Src.BaseStack(app, 'MyTestStack');
     // THEN
-    expectCDK(stack).to(matchTemplate({
-      "Resources": {}
-    }, MatchStyle.EXACT))
+    expect(stack).toHaveResource("AWS::S3::Bucket");
+});
+
+test("Has bucket versioning", () => {
+  const app = new core.App();
+  // WHEN
+  const stack = new Src.BaseStack(app, 'MyTestStack');
+  // THEN
+  expect(stack).toHaveResource("AWS::S3::Bucket", {
+    VersioningConfiguration: {
+      Status: "Enabled"
+    }
+  });
 });
