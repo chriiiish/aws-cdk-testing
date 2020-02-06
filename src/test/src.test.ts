@@ -22,3 +22,21 @@ test("Has bucket versioning", () => {
     }
   });
 });
+
+test("Buckets are encrypted", () => {
+  const app = new core.App();
+  // WHEN
+  const stack = new Src.BaseStack(app, 'MyTestStack');
+  // THEN
+  expect(stack).toHaveResource("AWS::S3::Bucket", {
+    BucketEncryption: {
+      ServerSideEncryptionConfiguration: [
+        {
+          ServerSideEncryptionByDefault: {
+            SSEAlgorithm: "aws:kms"
+          }
+        }
+      ]
+    }
+  });
+});

@@ -6,7 +6,8 @@ export class BaseStack extends core.Stack {
     super(scope, id, props);
 
     new s3.Bucket(this, "ContentBucket", {
-      versioned: true
+      versioned: true,
+      encryption: s3.BucketEncryption.KMS_MANAGED
     });
   }
 }
